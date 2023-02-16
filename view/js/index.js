@@ -5,7 +5,6 @@ const answerArea = document.querySelector('.answer-area');
 const addQuest = document.querySelector('#add-quest');
 const allQuestions = document.querySelector('.all-questions');
 
-
 let questions = [
     {
         question: "What is your name?",
@@ -41,7 +40,10 @@ function renderQuestions() {
                 option.classList.add('multi-choice')
                 option.innerHTML = `<div><input type="radio" name="q${i+1}" id="q${i+1}" value="${questions[i]['answer'][j]}"> 
                 ${questions[i]['answer'][j]}</div>
-                <button type="button" id="remove-option-1a">Remove</button>
+                <div class="choice-btns">
+                <button type="button" class="edit-option" id="edit-option-${i}${j}">Edit</button>
+                <button type="button" class="remove-option" id="remove-option-${i}${j}">Remove</button>
+                </div>
                 `
                 answerType.appendChild(option)
             }
@@ -52,7 +54,10 @@ function renderQuestions() {
                 option.classList.add('checkbox')
                 option.innerHTML = `<div><input type="checkbox" name="q${i+1}" id="q${i+1}" value="${questions[i]['answer'][j]}"> 
                 ${questions[i]['answer'][j]}</div>
-                <button type="button" class="remove-quest-btn" id="remove-option-${i+1}${j+1}">Remove</button>
+                <div class="choice-btns">
+                <button type="button" class="edit-option" id="edit-option-${i}${j}">Edit</button>
+                <button type="button" class="remove-option" id="remove-option-${i}${j}">Remove</button>
+                </div>
                 `
                 answerType.appendChild(option)
             }
@@ -96,4 +101,21 @@ addQuest.addEventListener('click', function (event) {
                 <div class="answer-area"></div>
     `
     allQuestions.appendChild(questionContainer)
+})
+
+const removeOptions = document.querySelectorAll('.remove-option')
+removeOptions.forEach(element => {
+    element.addEventListener('click', function (event) {
+        event.target.parentNode.parentNode.remove();
+    })
+});
+
+const editOptions = document.querySelectorAll('.edit-option');
+editOptions.forEach(element => {
+    element.addEventListener('click', function (event) {
+        newText = prompt("Enter new option: ")
+        console.log(event.target.parentNode.parentNode)
+        element.target.parentNode.value(newText);
+        element.parentNode.textContent = newText;
+    })
 })
