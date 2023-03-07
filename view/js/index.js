@@ -5,23 +5,7 @@ const answerArea = document.querySelector('.answer-area');
 const addQuest = document.querySelector('#add-quest');
 const allQuestions = document.querySelector('.all-questions');
 
-let questions = [
-    {
-        question: "What is your name?",
-        answerType: "multiple",
-        answer: ["Damian", 'Jon', 'Peter','Alex']
-    },
-    {
-        question: "What is your age?",
-        answerType: "checkbox",
-        answer: ["10", '15', '20','25']
-    },
-    {
-        question: "What is your country?",
-        answerType: "paragraph",
-        answer: ""
-    }
-]
+
 
 function renderQuestions() {
     allQuestions.innerHTML = ``
@@ -29,12 +13,28 @@ function renderQuestions() {
         let questionContainer = document.createElement('div')
         questionContainer.classList.add(`question-container`)
         questionContainer.setAttribute('id', `qc-${i + 1}`)
+        
+        // div to store question text and edit button
+        let questionCont = document.createElement('div')
+        questionCont.classList.add('question-cont')
+        
+        // creating elemnt for question text
         let questionText = document.createElement('h3')
         questionText.classList.add('question')
         questionText.innerHTML = questions[i]['question']
+
+        let editQuest = document.createElement('button')
+        editQuest.setAttribute('id', `edit-questText-${questions[i]}`)
+        editQuest.classList.add('edit-questText')
+        editQuest.textContent = `Edit Question`
+        
+        questionCont.appendChild(questionText)
+        questionCont.appendChild(editQuest)
+
         let answerType = document.createElement('div')
         answerType.classList.add('answer-type')
         if (questions[i]['answerType'] == 'multiple') {
+            // Loop on options if the answer type is multiple choice
             for (let j = 0; j < questions[i]['answer'].length; j++){
                 let option = document.createElement('div')
                 option.classList.add('multi-choice')
@@ -61,8 +61,14 @@ function renderQuestions() {
                 `
                 answerType.appendChild(option)
             }
+        } if (questions[i]['answerType'] == 'paragraph') {
+            let option = document.createElement('div')
+            option.classList.add('para-textarea');
+            option.innerHTML = `
+            <textarea name="q${i + 1}" id="q${i + 1}" cols="70" rows="5"></textarea>`
+            answerType.appendChild(option)
         }
-        questionContainer.appendChild(questionText)
+        questionContainer.appendChild(questionCont)
         questionContainer.appendChild(answerType)
        
         allQuestions.appendChild(questionContainer)
@@ -104,8 +110,10 @@ addQuest.addEventListener('click', function (event) {
 })
 
 const removeOptions = document.querySelectorAll('.remove-option')
+// Foreach loop to traverse over remove option elements
 removeOptions.forEach(element => {
     element.addEventListener('click', function (event) {
+        console.log(event.target.parentNode.parentNode)
         event.target.parentNode.parentNode.remove();
     })
 });
@@ -114,8 +122,21 @@ const editOptions = document.querySelectorAll('.edit-option');
 editOptions.forEach(element => {
     element.addEventListener('click', function (event) {
         newText = prompt("Enter new option: ")
-        console.log(event.target.parentNode.parentNode)
-        element.target.parentNode.value(newText);
-        element.parentNode.textContent = newText;
+        optionID = event.target.id
+        // fetched position of hyphen
+        hyphenIndex = optionID.lastIndexOf('-')
+        console.log(hyphenIndex);
+        // sliced the ID to get question number and option number combination from edit-option-ID
+        questOption = optionID.slice(hyphenIndex + 1);
+        console.log(questOption);
+        optionNum = questOption % 10;
+        questNum = Math.floor(questOption / 10);
+        console.log(questNum, optionNum);
+        questions[questNum]['answer'][optionNum] = newText
+        renderQuestions();
+        // console.log(event.target.parentNode.parentNode)
+        // element.target.parentNode.value(newText);
+        // element.parentNode.textContent = newText;
     })
 })
+

@@ -62,7 +62,7 @@ table tr{
 table tr label{
     font-size: 20px;
 }
-#submit, #reset, #submit-login, #reg-login, #add-quest {
+#submit, #reset, #submit-login, #reg-login, #add-quest, #save-answers {
     padding: 10px 20px;
     border: 0;
     border-radius: 5px;
@@ -107,7 +107,7 @@ table tr label{
     display: flex;
     flex-direction: column;
     width: 70%;
-    margin: 0 auto;
+    margin: 0 auto 5%;
     background-color: #A5F7E1;
     border-radius: 20px;
     padding: 20px;
@@ -132,7 +132,7 @@ table tr label{
     font-size: 20px;
     text-align: justify;
 }
-.answer-type button{
+.answer-type button, .edit-questText{
     background-color: #96ADFC;
     color: whitesmoke;
     font-size: 15px;
@@ -146,7 +146,7 @@ table tr label{
 #add-quest{
     background-color: #03C988;
 }
-.add-quest-btn{
+.add-quest-btn, .save-answers-btn{
     display: flex;
     justify-content: end;
 
@@ -161,4 +161,48 @@ table tr label{
     margin: 20px 5px;
     border-radius: 10px;
     padding-left: 10px;
+}
+.question-cont{
+    display: flex;
+    justify-content: space-between;
+}
+.edit-questText{
+    padding: 10px 20px ;
+    align-self: center;
+}
+
+
+/* Student login Page */
+.student-login-head{
+    background-color: #196BFF;
+    color: whitesmoke;
+    width: 30%;
+    margin: 0 auto;
+    padding: 10px 20px;
+    font-size: 30px;
+    border-radius: 20px;
+}
+
+.test-code{
+    width: 30%;
+    margin: 5% auto;
+}
+.test-code input{
+    width: 70%;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 20px;
+}
+.test-code button{
+    background-color: #03C988;
+    border-radius: 10px;
+    border: 0px;
+    padding: 12px 20px;
+    color: whitesmoke;
+    font-size: 20px;
+}
+
+#save-answers{
+    background-color: #03C988;
+
 }
